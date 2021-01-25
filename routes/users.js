@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../models/user');
 
@@ -49,7 +50,13 @@ router.post("/register", (req, res) => {
             // Checking if e-mail is avaliable
             if(user) {
                 errors.push({ msg: "Email has already been registered" });
-                render(res, errors, name, email, password, password2);
+                res.render('register', {
+                    errors: errors,
+                    name: name,
+                    email: email,
+                    password: password,
+                    password2: password2
+                });
 
             // Success
             } else {
@@ -58,10 +65,27 @@ router.post("/register", (req, res) => {
                     email: email,
                     password: password
                 });
-            }
+
+                // Encrypt user's password:
+                // Using bcrypt.
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        // Error:
+                        if(err) {
+                            console.log(err);
+                        }
+                        // Success:
+                        newUser.password = hash;
+                        newUser.save().then((value) => {
+                            console.log(value);
+                            res.redirect("/users/login");
+                        }).catch(value => {console.log(value)});
+                    });
+                });
+            }        
+
         });
     }
-
 });
 
 router.post("/login", (req, res, next) => {
