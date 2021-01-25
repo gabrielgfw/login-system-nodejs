@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 app.use(expressEjsLayout);
 
 // Body Parse Config:
-app.user(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}))
 
 // Routes Config:
 app.use("/", require("./routes/index"));

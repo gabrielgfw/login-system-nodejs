@@ -4,7 +4,7 @@
   "description": "Account system, for login and authentication system.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "author": "Gabriel Felipe Werner",
   "license": "ISC",
@@ -18,5 +18,8 @@
     "mongoose": "^5.11.13",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
