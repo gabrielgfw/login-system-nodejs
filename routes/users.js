@@ -72,14 +72,15 @@ router.post("/register", (req, res) => {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
                         // Error:
                         if(err) {
-                            console.log(err);
+                            throw err;
                         }
                         // Success:
                         newUser.password = hash;
+                        // Saving in DataBase / redirect to login:
                         newUser.save().then((value) => {
                             console.log(value);
                             res.redirect("/users/login");
-                        }).catch(value => {console.log(value)});
+                        }).catch(value => { console.log(value) });
                     });
                 });
             }        
