@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const expressEjsLayout = require('express-ejs-layouts');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+require("./config/passport")(passport);
+
 
 mongoose.connect('mongodb://localhost/test', {
     useNewUrlParser: true,
@@ -28,6 +31,10 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+// Passoport Config (login authenticator):
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Flash Config:
 app.use(flash());
