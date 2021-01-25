@@ -24,7 +24,6 @@ router.post("/register", (req, res) => {
     console.log("Password: " + password);
 
     // Submit Validations:
-
     if(!name || !email || !password || !password2) {
         errors.push({ msg: "All fields must bet filled." });
     }
@@ -88,7 +87,6 @@ router.post("/register", (req, res) => {
                     });
                 });
             }        
-
         });
     }
 });
@@ -102,7 +100,9 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/logout", (req, res) => {
-
+    req.logout();
+    req.flash("success_msg", "Logged out!");
+    res.redirect("/users/login");
 });
 
 module.exports = router;
