@@ -79,6 +79,7 @@ router.post("/register", (req, res) => {
                         // Saving in DataBase / redirect to login:
                         newUser.save().then((value) => {
                             console.log(value);
+                            req.flash("success_msg", "Success - Account has been registered.")
                             res.redirect("/users/login");
                         }).catch(value => { console.log(value) });
                     });
